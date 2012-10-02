@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 void updateFile(char * fileName)
 {
     QFile inputFile(fileName);
-    if(!inputFile.open(QFile::ReadWrite | QFile::Text))
+    if(!inputFile.open(QFile::ReadOnly | QFile::Text))
     {
         std::cout<<"Opening file error"<<std::endl;
         return;
@@ -37,7 +37,12 @@ void updateFile(char * fileName)
     {
         temp.insert(temp.indexOf("</h1>")+5,"\n\t\t<hr>");
     }
+    if(temp.contains("</body>"))
+    {
+        temp.insert(temp.indexOf("</body>")-1,"\t\t<hr>\n");
+    }
     inputFile.close();
+
 
     QFile outputFile(fileName);
     if(!outputFile.open(QFile::WriteOnly | QFile::Text))
