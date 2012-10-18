@@ -3,7 +3,7 @@
 #include <iostream>
 #include <QFile>
 #include <QTextStream>
-#include <QRegExp>
+//#include <QRegExp>
 
 void updateFile(char * fileName);
 
