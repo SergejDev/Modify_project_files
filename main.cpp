@@ -1,30 +1,37 @@
 #include <QtCore/QCoreApplication>
-//#include <stdio.h>
+#include <stdio.h>
 #include <iostream>
 #include <QFile>
 #include <QTextStream>
-//#include <QRegExp>
+#include <QDebug>
 
-void updateFile(char * fileName);
+void updateFile(char * ,char *);
 
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    char *fileName=new char[100];
-    //char* fileName="d:\\Programming\\Qt prog's\\Modify_project_files\\debug\\graphics.html";
-    std::cout<<"Enter file name to update: ";
-    std::cin>>fileName;
-    updateFile(fileName);
+    if(argc < 3)
+    {
+        std::cout<<"Please enter parameters.";
+        getchar();
+        return 0;
+    }
+    char *inputFileName;
+    char *outputFileName;
+    inputFileName=argv[1];
+    outputFileName=argv[2];
+    std::cout<<inputFileName<<" -> "<<outputFileName<<std::endl;
+    updateFile(inputFileName,outputFileName);
 
-    delete[] fileName;
-
-    return a.exec();
+    delete[] inputFileName;
+    delete[] outputFileName;
+    return 0;
 }
 
-void updateFile(char * fileName)
+void updateFile(char * inFileName,char * outFileName)
 {
-    QFile inputFile(fileName);
+    QFile inputFile(inFileName);
     if(!inputFile.open(QFile::ReadOnly | QFile::Text))
     {
         std::cout<<"Opening file error"<<std::endl;
@@ -44,7 +51,7 @@ void updateFile(char * fileName)
     inputFile.close();
 
 
-    QFile outputFile(fileName);
+    QFile outputFile(outFileName);
     if(!outputFile.open(QFile::WriteOnly | QFile::Text))
     {
         std::cout<<"Opening file error"<<std::endl;
